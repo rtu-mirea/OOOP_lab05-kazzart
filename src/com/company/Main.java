@@ -9,6 +9,10 @@ public class Main {
     private static Voting currentVoting;
     private static User currentUser;
     public static void main(String[] args) {
+        Login log = new Login();
+        Register reg = new Register();
+        MainWindow mw = new MainWindow();
+        log.setVisible(true);
         users.add(new Admin("admin", "admin", "admin"));
         int comm0 = -1;
         Scanner in = new Scanner(System.in);
