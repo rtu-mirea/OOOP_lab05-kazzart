@@ -1,9 +1,11 @@
 package com.company;
 
+import java.util.Arrays;
+
 public class User {
     protected String name;
     protected String login;
-    protected String password;
+    protected char[] password;
     public int access;
     public Voting lastElection;
 
@@ -11,7 +13,7 @@ public class User {
 
     }
 
-    public User(String name, String login, String password) {
+    public User(String name, String login, char[] password) {
         setName(name);
         setLogin(login);
         setPassword(password);
@@ -25,7 +27,7 @@ public class User {
         this.name = name;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(char[] password) {
         this.password = password;
     }
 
@@ -37,12 +39,12 @@ public class User {
         return name;
     }
 
-    public String getPassword() {
+    public char[] getPassword() {
         return password;
     }
 
-    public boolean enter(String login, String password) {
-        if (this.login == login && this.password == password) {
+    public boolean enter(String login, char[] password) {
+        if (this.login == login && Arrays.equals(this.password, password)) {
             return true;
         } else {
             return false;

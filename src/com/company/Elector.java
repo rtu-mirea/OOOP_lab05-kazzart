@@ -3,7 +3,7 @@ package com.company;
 public class Elector extends User {
     private boolean voted = false;
 
-    public Elector(String name, String login, String password) {
+    public Elector(String name, String login, char[] password) {
         super(name, login, password);
         access = 0;
     }

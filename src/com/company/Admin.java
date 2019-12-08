@@ -1,7 +1,7 @@
 package com.company;
 
 public class Admin extends User {
-    public Admin(String name, String login, String password) {
+    public Admin(String name, String login, char[] password) {
         super(name, login, password);
         access = 1;
     }

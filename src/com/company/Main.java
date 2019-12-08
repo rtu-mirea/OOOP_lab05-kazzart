@@ -8,12 +8,15 @@ public class Main {
     private static List<User> users = new ArrayList<>();
     private static Voting currentVoting;
     private static User currentUser;
+    public static Login log = new Login();
+    public static Register reg = new Register();
+    public static MainWindow mw = new MainWindow();
     public static void main(String[] args) {
-        Login log = new Login();
-        Register reg = new Register();
-        MainWindow mw = new MainWindow();
         log.setVisible(true);
-        users.add(new Admin("admin", "admin", "admin"));
+//        reg.setVisible(true);
+//        mw.setVisible(true);
+        char[] pass = {'a', 'd', 'm', 'i', 'n'};
+        users.add(new Admin("admin", "admin", pass));
         int comm0 = -1;
         Scanner in = new Scanner(System.in);
         while (comm0 != 0) {
@@ -23,7 +26,7 @@ public class Main {
             System.out.println();
             switch (comm0) {
                 case 1:
-                    findUserProcess();
+//                    findUserProcess();
                     if (currentUser != null && currentUser.access == 0) {
                         int comm1 = -1;
                         while (comm1 != 0) {
@@ -80,7 +83,7 @@ public class Main {
                     }
                     break;
                 case 2:
-                    addUserProcess();
+//                    addUserProcess();
                     break;
                 case 0:
                     System.out.println("Ending the program...");
@@ -92,90 +95,90 @@ public class Main {
         }
     }
 
-    private static User addUser(String name, String login, String password, String role) throws Exception {
-        if (!users.isEmpty()) {
-            for (User user: users) {
-                if (user.login.equals(login)) {
-                    System.out.println("0");
-                    throw new Exception("Login already exists");
-                }
-            }
-        }
-
-        if (role.equals("admin")) {
-            Admin user = new Admin(name, login, password);
-            users.add(user);
-            return user;
-        } else if (role.equals("elector")) {
-            Elector user = new Elector(name, login, password);
-            users.add(user);
-            return user;
-        }
-        throw new Exception("Wrong role!");
-    }
-
-    private static void addUserProcess() {
-        boolean done = false;
-        while (!done) {
-            Scanner in = new Scanner(System.in);
-            System.out.print("Enter your name: ");
-            String name = in.nextLine();
-            System.out.print("Enter your login: ");
-            String login = in.nextLine();
-            System.out.print("Enter your password: ");
-            String password1 = in.nextLine();
-            System.out.print("Enter your password again: ");
-            String password2 = in.nextLine();
-            if (password1.equals(password2)) {
-                try {
-                    addUser(name, login, password1, "elector");
-                    System.out.println("New elector registered");
-                    System.out.println();
-                    done = true;
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
-            } else {
-                System.out.println("Passwords are different");
-            }
-        }
-    }
-
-    private static User findUser(String login, String password) throws Exception {
-        if (!users.isEmpty()) {
-            for (User user: users) {
-                if (user.login.equals(login)) {
-                    if (user.password.equals(password)) {
-                        return user;
-                    } else {
-                        throw new Exception("Wrong password!");
-                    }
-                }
-            }
-        }
-        throw new Exception("Login not found!");
-    }
-
-    private static void findUserProcess() {
-        Scanner in = new Scanner(System.in);
-        System.out.print("Enter your login: ");
-        String login = in.nextLine();
-        System.out.print("Enter your password: ");
-        String password1 = in.nextLine();
-        System.out.println();
-        try {
-            currentUser = findUser(login, password1);
-            if (currentUser.access == 1) {
-                System.out.println("Logined as admin - " + currentUser.login);
-                System.out.println();
-            } else {
-                System.out.println("Logined as elector - " + currentUser.login);
-                System.out.println();
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
+//    private static User addUser(String name, String login, char[] password, String role) throws Exception {
+//        if (!users.isEmpty()) {
+//            for (User user: users) {
+//                if (user.login.equals(login)) {
+//                    System.out.println("0");
+//                    throw new Exception("Login already exists");
+//                }
+//            }
+//        }
+//
+//        if (role.equals("admin")) {
+//            Admin user = new Admin(name, login, password);
+//            users.add(user);
+//            return user;
+//        } else if (role.equals("elector")) {
+//            Elector user = new Elector(name, login, password);
+//            users.add(user);
+//            return user;
+//        }
+//        throw new Exception("Wrong role!");
+//    }
+//
+//    private static void addUserProcess() {
+//        boolean done = false;
+//        while (!done) {
+//            Scanner in = new Scanner(System.in);
+//            System.out.print("Enter your name: ");
+//            String name = in.nextLine();
+//            System.out.print("Enter your login: ");
+//            String login = in.nextLine();
+//            System.out.print("Enter your password: ");
+//            String password1 = in.nextLine();
+//            System.out.print("Enter your password again: ");
+//            String password2 = in.nextLine();
+//            if (password1.equals(password2)) {
+//                try {
+//                    addUser(name, login, password1, "elector");
+//                    System.out.println("New elector registered");
+//                    System.out.println();
+//                    done = true;
+//                } catch (Exception e) {
+//                    System.out.println(e.getMessage());
+//                }
+//            } else {
+//                System.out.println("Passwords are different");
+//            }
+//        }
+//    }
+//
+//    private static User findUser(String login, String password) throws Exception {
+//        if (!users.isEmpty()) {
+//            for (User user: users) {
+//                if (user.login.equals(login)) {
+//                    if (user.password.equals(password)) {
+//                        return user;
+//                    } else {
+//                        throw new Exception("Wrong password!");
+//                    }
+//                }
+//            }
+//        }
+//        throw new Exception("Login not found!");
+//    }
+//
+//    private static void findUserProcess() {
+//        Scanner in = new Scanner(System.in);
+//        System.out.print("Enter your login: ");
+//        String login = in.nextLine();
+//        System.out.print("Enter your password: ");
+//        String password1 = in.nextLine();
+//        System.out.println();
+//        try {
+//            currentUser = findUser(login, password1);
+//            if (currentUser.access == 1) {
+//                System.out.println("Logined as admin - " + currentUser.login);
+//                System.out.println();
+//            } else {
+//                System.out.println("Logined as elector - " + currentUser.login);
+//                System.out.println();
+//            }
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
 
     private static void addVoting() {
         Scanner in = new Scanner(System.in);
@@ -275,5 +278,29 @@ public class Main {
         System.out.println("2. Add new candidate in the list");
         System.out.println("3. Election results");
         System.out.println("0. Exit account");
+    }
+
+    public static void setUsers(List<User> users) {
+        Main.users = users;
+    }
+
+    public static void setCurrentUser(User currentUser) {
+        Main.currentUser = currentUser;
+    }
+
+    public static void setCurrentVoting(Voting currentVoting) {
+        Main.currentVoting = currentVoting;
+    }
+
+    public static List<User> getUsers() {
+        return users;
+    }
+
+    public static User getCurrentUser() {
+        return currentUser;
+    }
+
+    public static Voting getCurrentVoting() {
+        return currentVoting;
     }
 }
