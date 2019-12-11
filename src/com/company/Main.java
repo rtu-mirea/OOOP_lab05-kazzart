@@ -1,8 +1,6 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     private static List<User> users = new ArrayList<>();
@@ -297,10 +295,17 @@ public class Main {
     }
 
     public static User getCurrentUser() {
-        return currentUser;
+        if (currentUser != null) {
+            return currentUser;
+        } else
+            return new User("", "", new char[0]);
     }
 
     public static Voting getCurrentVoting() {
-        return currentVoting;
+
+        if (currentVoting != null) {
+            return currentVoting;
+        } else
+            return new Voting("", new ArrayList<>());
     }
 }

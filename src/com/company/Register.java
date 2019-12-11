@@ -13,34 +13,27 @@ import java.util.Scanner;
 import javax.swing.border.*;
 
 public class Register extends JFrame{
-    public static JLabel name_label = new JLabel("Name:");
-    public static JLabel login_label = new JLabel("Login:");
-    public static JLabel password_label = new JLabel("Password:");
-    public static JLabel repeat_password_label = new JLabel("Repeat password:");
-    public static JTextField name_textField = new JTextField(40);
-    public static JTextField login_textField = new JTextField(40);
-    public static JPasswordField password_textField = new JPasswordField(40);
-    public static JPasswordField repeat_password_textField = new JPasswordField(40);
-    public static JButton register_button = new JButton("Register");
-    public static JPanel p = new JPanel();
+    public JLabel name_label = new JLabel("Name:");
+    public JLabel login_label = new JLabel("Login:");
+    public JLabel empty_login_label = new JLabel("Enter the login");
+    public JLabel wrong_login_label = new JLabel("Login already exists");
+    public JLabel password_label = new JLabel("Password:");
+    public JLabel empty_password_label = new JLabel("Enter the password");
+    public JLabel wrong_password_label = new JLabel("Passwords are different");
+    public JLabel repeat_password_label = new JLabel("Repeat password:");
+    public JTextField name_textField = new JTextField(40);
+    public JTextField login_textField = new JTextField(40);
+    public JPasswordField password_textField = new JPasswordField(40);
+    public JPasswordField repeat_password_textField = new JPasswordField(40);
+    public JButton register_button = new JButton("Register");
+    public JButton login_button = new JButton("Login");
+    public JPanel p = new JPanel();
 
     Register() {
         super("Register");
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(350, 350);
         p.setLayout(null);
-
-        name_label.setBounds(80, 100, 36,17);
-        login_label.setBounds(80, 117, 36,17);
-        password_label.setBounds(56, 134, 60,17);
-        repeat_password_label.setBounds(15, 151, 110,17);
-        name_textField.setBounds(120, 100, 120, 17);
-        login_textField.setBounds(120, 117, 120, 17);
-        password_textField.setBounds(120, 134, 120, 17);
-        repeat_password_textField.setBounds(120, 151, 120, 17);
-        register_button.setBounds(120, 168, 120, 17);
-
-        ActionListener actionListener = new RegisterListener();
-        register_button.addActionListener(actionListener);
 
         p.add(name_label);
         p.add(login_label);
@@ -51,10 +44,40 @@ public class Register extends JFrame{
         p.add(password_textField);
         p.add(repeat_password_textField);
         p.add(register_button);
+        p.add(login_button);
         add(p);
+
+        name_label.setBounds(80, 100, 36,17);
+        login_label.setBounds(80, 117, 36,17);
+        password_label.setBounds(56, 134, 60,17);
+        repeat_password_label.setBounds(15, 151, 110,17);
+        name_textField.setBounds(120, 100, 120, 17);
+        login_textField.setBounds(120, 117, 120, 17);
+        password_textField.setBounds(120, 134, 120, 17);
+        repeat_password_textField.setBounds(120, 151, 120, 17);
+        register_button.setBounds(120, 168, 120, 17);
+        login_button.setBounds(120, 185, 120, 17);
+
+        ActionListener actionListener = new RegistrationListener();
+        register_button.addActionListener(actionListener);
+
+        ActionListener loginListener = new LoginListener();
+        login_button.addActionListener(loginListener);
+
+        Insets insets = this.getInsets();
+        this.setBounds(500, 300, 350 + insets.left + insets.right, 350 + insets.top + insets.bottom);
     }
 
-    public class RegisterListener implements ActionListener {
+    public class LoginListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            setVisible(false);
+            Main.log.login_textField.setText("");
+            Main.log.password_textField.setText("");
+            Main.log.setVisible(true);
+        }
+    }
+
+    public class RegistrationListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             addUserProcess();
             setVisible(false);
@@ -62,7 +85,7 @@ public class Register extends JFrame{
         }
     }
 
-    private static User addUser(String name, String login, char[] password, String role) throws Exception {
+    private User addUser(String name, String login, char[] password, String role) throws Exception {
         if (!Main.getUsers().isEmpty()) {
             for (User user: Main.getUsers()) {
                 if (user.login.equals(login)) {
@@ -88,7 +111,7 @@ public class Register extends JFrame{
         throw new Exception("Wrong role!");
     }
 
-    private static void addUserProcess() {
+    private void addUserProcess() {
         String name = name_textField.getText();
         String login = login_textField.getText();
         char[] password1 = password_textField.getPassword();
