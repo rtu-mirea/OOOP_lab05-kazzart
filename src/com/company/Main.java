@@ -1,15 +1,37 @@
 package com.company;
 
+import javax.swing.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.*;
 
 public class Main {
     private static List<User> users = new ArrayList<>();
     private static Voting currentVoting;
     private static User currentUser;
-    public static Login log = new Login();
-    public static Register reg = new Register();
-    public static MainWindow mw = new MainWindow();
+    public static Login log;
+    public static Register reg;
+    public static MainWindow mw ;
     public static void main(String[] args) {
+        try
+        {
+            // Reading the object from a file
+            ObjectInputStream in_voting = new ObjectInputStream(new FileInputStream("current_voting.ser"));
+            ObjectInputStream in_users = new ObjectInputStream(new FileInputStream("users.ser"));
+
+            // Method for deserialization of object
+            currentVoting = (Voting)in_voting.readObject();
+            users = (List<User>)in_users.readObject();
+
+            in_voting.close();
+            in_users.close();
+
+        } catch(IOException e) { }
+        catch(ClassNotFoundException e) { }
+        log = new Login();
+        reg = new Register();
+        mw = new MainWindow();
         log.setVisible(true);
 //        reg.setVisible(true);
 //        mw.setVisible(true);
@@ -178,85 +200,61 @@ public class Main {
 //        }
 //    }
 
-    private static void addVoting() {
-        Scanner in = new Scanner(System.in);
-        System.out.print("Enter elections title: ");
-        String title = in.nextLine();
-        System.out.println();
+    public static void addVoting() {
+        String title = mw.new_election_textField.getText();
         currentVoting = new Voting(title, new ArrayList<>());
     }
 
-    private static void addNewCandidate() {
+    public static void addNewCandidate() {
         if (currentVoting != null) {
-            Scanner in = new Scanner(System.in);
-            System.out.print("Enter candidate's name: ");
-            String name = in.nextLine();
-            System.out.println();
-            if (!currentVoting.candidates.isEmpty()) {
-                for (Candidate candidate : currentVoting.candidates) {
-                    if (candidate.getName().equals(name)) {
-                        System.out.println("Candidate is already on the list");
-                        return;
-                    }
-                }
-            }
+            String name = mw.new_candidate_textField.getText();
             currentVoting.candidates.add(new Candidate(name));
+            mw.candidates_select_list.addItem(name);
         } else {
-            System.out.println("There is no any elections right now");
+            JOptionPane.showMessageDialog(null, "There is no any elections right now");
         }
     }
 
-    private static void vote() {
-        Scanner in = new Scanner(System.in);
+    public static void vote() {
         if (!currentVoting.candidates.isEmpty()) {
-            if (currentUser.lastElection != currentVoting) {
-                System.out.println("Elections: " + currentVoting.title);
-                for (int i = 0; i < currentVoting.candidates.size(); i++) {
-                    System.out.println(Integer.toString(i + 1) + ". " + currentVoting.candidates.get(i).getName());
-                }
-                System.out.println("0. Vote for none");
-                System.out.println();
+            if (!currentUser.lastElection.title.equals(currentVoting.title)) {
                 int choiceDone = -1;
                 while (choiceDone < 0 || choiceDone > currentVoting.candidates.size()) {
-                    System.out.print("Choose the candidate from the list: ");
-                    choiceDone = in.nextInt();
-                    System.out.println();
+                    choiceDone = mw.candidates_select_list.getSelectedIndex();
+//                    System.out.println();
                     if (choiceDone >= 0 && choiceDone <= currentVoting.candidates.size()) {
-                        if (choiceDone == 0) {
-                            currentUser.lastElection = currentVoting;
-                        } else {
-                            Candidate votedCandidate = currentVoting.candidates.get(choiceDone - 1);
-                            votedCandidate.addVoice();
-                            currentVoting.candidates.set(choiceDone - 1, votedCandidate);
-                            currentUser.lastElection = currentVoting;
-                        }
+                        Candidate votedCandidate = currentVoting.candidates.get(choiceDone);
+                        votedCandidate.addVoice();
+                        currentVoting.candidates.set(choiceDone, votedCandidate);
+                        currentUser.lastElection = currentVoting;
                     } else {
-                        System.out.println("Wrong input!");
+                        JOptionPane.showMessageDialog(null, "Wrong input!");
                         choiceDone = -1;
                     }
                 }
             } else {
-                System.out.println("You cannot vote in this elections anymore");
+                JOptionPane.showMessageDialog(null, "You cannot vote in this elections anymore");
             }
         } else {
-            System.out.println("There is no any person in the candidates list");
+            JOptionPane.showMessageDialog(null, "There is no any person in the candidates list");
         }
     }
 
-    private static void getResults() {
-        Scanner in = new Scanner(System.in);
+    public static String getResults() {
+//        Scanner in = new Scanner(System.in);
+        String res = "";
         if (currentVoting != null && !currentVoting.candidates.isEmpty()) {
-            System.out.println("Elections: " + currentVoting.title);
+            res += "Elections: " + currentVoting.title + "\n";
             for (int i = 0; i < currentVoting.candidates.size(); i++) {
-                System.out.println(Integer.toString(i + 1) + ". " + currentVoting.candidates.get(i).getName() + ": " +
-                        currentVoting.candidates.get(i).getVoices());
+                res += Integer.toString(i + 1) + ". " + currentVoting.candidates.get(i).getName() + ": " +
+                        currentVoting.candidates.get(i).getVoices() + "\n";
             }
             System.out.println();
 
         } else {
-            System.out.println("There is no any person in the candidates list");
-            System.out.println();
+            res = "There is no any person in the candidates list";
         }
+        return res;
     }
 
     private static void outputMenu0() {

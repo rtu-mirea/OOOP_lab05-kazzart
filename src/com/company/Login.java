@@ -155,20 +155,24 @@ public class Login extends JFrame {
 //                Main.mw.vote_button.setBounds(120, 168, 120, 17);
 //                Main.mw.exit_button.setBounds(120, 168, 120, 17);
 
-                    Main.mw.p.add(Main.mw.user_label);
-                    Main.mw.p.add(Main.mw.current_election_label);
-                    Main.mw.p.add(Main.mw.candidates_label);
-                    Main.mw.p.add(Main.mw.new_candidate_label);
-                    Main.mw.p.add(Main.mw.new_candidate_textField);
-                    Main.mw.p.add(Main.mw.candidates_select_list);
-                    Main.mw.p.add(Main.mw.new_election_button);
-                    Main.mw.p.add(Main.mw.new_candidate_button);
-                    Main.mw.p.add(Main.mw.election_results_button);
-                    Main.mw.p.add(Main.mw.vote_button);
-                    Main.mw.p.add(Main.mw.exit_button);
+//                    Main.mw.p.add(Main.mw.user_label);
+//                    Main.mw.p.add(Main.mw.current_election_label);
+//                    Main.mw.p.add(Main.mw.candidates_label);
+//                    Main.mw.p.add(Main.mw.new_candidate_label);
+//                    Main.mw.p.add(Main.mw.new_candidate_textField);
+//                    Main.mw.p.add(Main.mw.candidates_select_list);
+//                    Main.mw.p.add(Main.mw.new_election_button);
+//                    Main.mw.p.add(Main.mw.new_candidate_button);
+//                    Main.mw.p.add(Main.mw.election_results_button);
+//                    Main.mw.p.add(Main.mw.vote_button);
+//                    Main.mw.p.add(Main.mw.exit_button);
 //                Main.mw.add(Main.mw.p);
+                    Main.mw.new_election_textField.setVisible(true);
+                    Main.mw.vote_button.setVisible(false);
                     Main.mw.setVisible(true);
                 } else {
+                    Main.mw.user_label.setText(Main.getCurrentUser().getName());
+                    Main.mw.current_election_label.setText("Current election: " + Main.getCurrentVoting().title);
 //                Main.mw.user_label.setBounds(10, 10, 300,17);
 //                Main.mw.current_election_label.setBounds(10, 27, 300,17);
 //                Main.mw.candidates_label.setBounds(10, 44, 100,17);
@@ -184,15 +188,21 @@ public class Login extends JFrame {
                     Main.mw.p.add(Main.mw.user_label);
                     Main.mw.p.add(Main.mw.current_election_label);
                     Main.mw.p.add(Main.mw.candidates_label);
-                    Main.mw.p.add(Main.mw.new_candidate_label);
-                    Main.mw.p.add(Main.mw.new_candidate_textField);
+//                    Main.mw.p.add(Main.mw.new_candidate_label);
+//                    Main.mw.p.add(Main.mw.new_candidate_textField);
                     Main.mw.p.add(Main.mw.candidates_select_list);
-                    Main.mw.p.add(Main.mw.new_election_button);
-                    Main.mw.p.add(Main.mw.new_candidate_button);
+//                    Main.mw.p.add(Main.mw.new_election_button);
+//                    Main.mw.p.add(Main.mw.new_candidate_button);
                     Main.mw.p.add(Main.mw.election_results_button);
                     Main.mw.p.add(Main.mw.vote_button);
                     Main.mw.p.add(Main.mw.exit_button);
 //                Main.mw.add(Main.mw.p);
+                    Main.mw.new_election_textField.setVisible(false);
+                    Main.mw.new_candidate_label.setVisible(false);
+                    Main.mw.new_candidate_textField.setVisible(false);
+                    Main.mw.new_election_button.setVisible(false);
+                    Main.mw.new_candidate_button.setVisible(false);
+                    Main.mw.vote_button.setVisible(true);
                     Main.mw.setVisible(true);
                 }
             } else {

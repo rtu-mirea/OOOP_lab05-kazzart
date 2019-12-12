@@ -3,7 +3,7 @@ package com.company;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Voting {
+public class Voting implements java.io.Serializable {
     public String title;
     public List<Candidate> candidates;
 

@@ -1,6 +1,6 @@
 package com.company;
 
-public class Candidate {
+public class Candidate implements java.io.Serializable {
     private String name;
     private int voices = 0;
 

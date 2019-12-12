@@ -1,6 +1,6 @@
 package com.company;
 
-public class Elector extends User {
+public class Elector extends User implements java.io.Serializable {
     private boolean voted = false;
 
     public Elector(String name, String login, char[] password) {

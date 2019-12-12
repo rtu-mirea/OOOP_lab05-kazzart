@@ -2,7 +2,7 @@ package com.company;
 
 import java.util.Arrays;
 
-public class User {
+public class User implements java.io.Serializable {
     protected String name;
     protected String login;
     protected char[] password;
